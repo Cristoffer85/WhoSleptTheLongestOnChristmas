@@ -2,6 +2,7 @@ package how.to.unknownkoderspringsecurity.service;
 
 import how.to.unknownkoderspringsecurity.model.Role;
 import how.to.unknownkoderspringsecurity.model.User;
+import how.to.unknownkoderspringsecurity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,16 +19,15 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder encoder;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         System.out.println("In the user detail service");
 
-        if(!username.equals("Ethan")) throw new UsernameNotFoundException("Not Ethan");
-
-        Set<Role> roles = new HashSet<>();
-        roles.add(new Role(1, "USER"));
-
-        return new User(1, "Ethan", encoder.encode("password"), roles);
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
     }
 }

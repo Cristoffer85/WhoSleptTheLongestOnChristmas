@@ -2,6 +2,7 @@ package how.to.unknownkoderspringsecurity.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ public class User implements UserDetails {
 
     @Id
     private Integer userId; // Assuming MongoDB ObjectId is used
+    @Indexed(unique=true)
     private String username;
     private String password;
 
