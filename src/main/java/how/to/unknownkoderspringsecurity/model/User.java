@@ -1,7 +1,7 @@
 package how.to.unknownkoderspringsecurity.model;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +16,7 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
-    private Integer userId; // Assuming MongoDB ObjectId is used
+    private Integer userId;
     @Indexed(unique=true)
     private String username;
     private String password;
