@@ -16,7 +16,7 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
-    private Integer userId;
+    private String userId;
     @Indexed(unique=true)
     private String username;
     private String password;
@@ -28,7 +28,7 @@ public class User implements UserDetails {
         this.authorities = new HashSet<>();
     }
 
-    public User(Integer userId, String username, String password, Set<Role> authorities) {
+    public User(String userId, String username, String password, Set<Role> authorities) {
         super();
         this.userId = userId;
         this.username = username;

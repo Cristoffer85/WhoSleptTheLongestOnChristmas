@@ -1,5 +1,6 @@
 package how.to.unknownkoderspringsecurity.controller;
 
+import how.to.unknownkoderspringsecurity.model.LoginResponseDTO;
 import how.to.unknownkoderspringsecurity.model.RegistrationDTO;
 import how.to.unknownkoderspringsecurity.model.User;
 import how.to.unknownkoderspringsecurity.service.AuthenticationService;
@@ -17,5 +18,10 @@ public class AuthenticationController {
     @PostMapping("/register")
     public User registerUser(@RequestBody RegistrationDTO body){
         return authenticationService.registerUser(body.getUsername(), body.getPassword());
+    }
+
+    @PostMapping("/login")
+    public LoginResponseDTO loginUser(@RequestBody RegistrationDTO body){
+        return authenticationService.loginUser(body.getUsername(), body.getPassword());
     }
 }
