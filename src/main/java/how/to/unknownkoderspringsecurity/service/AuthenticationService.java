@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -36,16 +37,23 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public User registerUser(String username, String password){
-
+    public User registerUser(String username, String password) {
         String encodedPassword = passwordEncoder.encode(password);
-        Role userRole = roleRepository.findByAuthority("USER").get();
+        Role userRole = roleRepository.findByAuthority("USER").orElseThrow(() -> new RuntimeException("USER role not found"));
 
         Set<Role> authorities = new HashSet<>();
-
         authorities.add(userRole);
 
-        return userRepository.save(new User("1", username, encodedPassword, authorities));
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setPassword(encodedPassword);
+        newUser.setAuthorities(authorities);
+
+        // Generate a unique userId (you can use UUID for this)
+        String userId = UUID.randomUUID().toString();
+        newUser.setUserId(userId);
+
+        return userRepository.save(newUser);
     }
 
     public LoginResponseDTO loginUser(String username, String password){

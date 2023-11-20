@@ -24,18 +24,18 @@ public class UnknownKoderSpringSecurityApplication {
     }
 
     @Bean
-    CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder){
-        return args ->{
-            if(roleRepository.findByAuthority("ADMIN").isPresent()) return;
-            Role adminRole = roleRepository.save(new Role("ADMIN"));
-                             roleRepository.save(new Role("USER"));
+    CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        return args -> {
+            if (roleRepository.findByAuthority("ADMIN").isPresent()) return;
+            Role adminRole = roleRepository.save(new Role(1, "ADMIN"));
+            roleRepository.save(new Role(2, "USER"));
 
-                             Set<Role> roles = new HashSet<>();
-                             roles.add(adminRole);
+            Set<Role> roles = new HashSet<>();
+            roles.add(adminRole);
 
-                             User admin = new User("1", "admin", passwordEncoder.encode("password"), roles);
+            User admin = new User("1", "admin", passwordEncoder.encode("superadminpassword"), roles);
 
-                             userRepository.save(admin);
+            userRepository.save(admin);
         };
     }
 }

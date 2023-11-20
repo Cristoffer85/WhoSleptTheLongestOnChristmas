@@ -6,11 +6,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
 @Data
-@Document(collection="Roles")
+@Document(collection = "Roles")
 public class Role implements GrantedAuthority {
 
     @Id
     private String roleId;
+    private Integer customRoleId;
     private String authority;
 
     public Role() {
@@ -21,8 +22,8 @@ public class Role implements GrantedAuthority {
         this.authority = authority;
     }
 
-    public Role(String roleId, String authority) {
-        this.roleId = roleId;
+    public Role(Integer customRoleId, String authority) {
+        this.customRoleId = customRoleId;
         this.authority = authority;
     }
 

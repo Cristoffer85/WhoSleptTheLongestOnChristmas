@@ -1,5 +1,8 @@
 package how.to.unknownkoderspringsecurity.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,4 +18,8 @@ public class UserController {
         return "User access level";
     }
 
+    @GetMapping("/me")
+    public UserDetails getCurrentUser(Authentication authentication) {
+        return (UserDetails) authentication.getPrincipal();
+    }
 }
