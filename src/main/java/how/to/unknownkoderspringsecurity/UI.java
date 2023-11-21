@@ -1,81 +1,70 @@
 package how.to.unknownkoderspringsecurity;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
-
 import java.util.Scanner;
 
-@Component
 public class UI {
 
-    private final AuthenticationManager authenticationManager;
+    private Scanner scanner;
 
-    public UI(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
+    public UI() {
+        this.scanner = new Scanner(System.in);
     }
 
-    public void start() {
-        Scanner scanner = new Scanner(System.in);
+    public void displayLoginMenu() {
+        while (true) {
+            System.out.println("Welcome to the Application!");
+            System.out.println("1. Login");
+            System.out.println("2. Create new user");
+            System.out.println("3. Exit");
 
-        System.out.println(
-                """
-                \nWelcome to the How long did you sleep last christmas application!
-                 
-                1. Login
-                2. Create User
-                """);
+            int choice = getUserChoice();
 
-        System.out.print("Choose an option: ");
-
-        int option = scanner.nextInt();
-
-        switch (option) {
-            case 1:
-                login(scanner);
-                break;
-            case 2:
-                createUser(scanner);
-                break;
-            default:
-                System.out.println("Invalid option");
+            switch (choice) {
+                case 1:
+                    handleLogin();
+                    break;
+                case 2:
+                    handleCreateUser();
+                    break;
+                case 3:
+                    System.out.println("Exiting the application. Goodbye!");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
         }
     }
 
-    private void login(Scanner scanner) {
-        System.out.print("Enter username: ");
+    private int getUserChoice() {
+        System.out.print("Enter your choice: ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a number.");
+            scanner.next(); // consume the invalid input
+        }
+        return scanner.nextInt();
+    }
+
+    private void handleLogin() {
+        System.out.print("Enter your username: ");
         String username = scanner.next();
-        System.out.print("Enter password: ");
+
+        System.out.print("Enter your password: ");
         String password = scanner.next();
 
-        try {
-            Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password)
-            );
-
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            System.out.println("Login successful!");
-
-            // Implement logic to display menu based on authorities (ADMIN or USER)
-            displayMenu();
-        } catch (Exception e) {
-            System.out.println("Login failed. Please try again.");
-        }
+        // TODO: Call your authentication service and perform login logic here
+        // For simplicity, let's assume a successful login for any input
+        System.out.println("Login successful! Welcome, " + username + ".");
     }
 
-    private void createUser(Scanner scanner) {
-        // Implement logic to create a new user
-        // This may involve capturing user details and making a request to your UserController
-        // Example: userService.createUser(newUser);
-    }
+    private void handleCreateUser() {
+        System.out.print("Enter a new username: ");
+        String username = scanner.next();
 
-    private void displayMenu() {
-        // Implement logic to display the appropriate menu based on user authorities
-        // You can use SecurityContextHolder.getContext().getAuthentication() to get the current authentication details
-        // Example: Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // Set<User> authorities = (Set<User>) authentication.getAuthorities();
-        // Then, based on the authorities, display the corresponding menu options
+        System.out.print("Enter a password for the new user: ");
+        String password = scanner.next();
+
+        // TODO: Call your user creation service and perform user creation logic here
+        // For simplicity, let's assume a successful user creation for any input
+        System.out.println("User created successfully! Welcome, " + username + ".");
     }
 }

@@ -56,6 +56,7 @@ public class AuthenticationService {
         return userRepository.save(newUser);
     }
 
+
     public LoginResponseDTO loginUser(String username, String password){
 
         try{
