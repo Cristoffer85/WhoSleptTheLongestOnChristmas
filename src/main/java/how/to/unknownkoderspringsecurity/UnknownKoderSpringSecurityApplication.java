@@ -22,10 +22,11 @@ public class UnknownKoderSpringSecurityApplication {
 
     @Bean
     CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
         return args -> {
             if (roleRepository.findByAuthority("ADMIN").isPresent()) return;
             Role adminRole = roleRepository.save(new Role(1, "ADMIN"));
-                             roleRepository.save(new Role(2, "USER"));
+            roleRepository.save(new Role(2, "USER"));
 
             Set<Role> roles = new HashSet<>();
             roles.add(adminRole);

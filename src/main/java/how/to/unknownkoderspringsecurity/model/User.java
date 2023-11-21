@@ -29,9 +29,10 @@ public class User implements UserDetails {
     @Id
     private String userId;
 
-    @Indexed(unique = true)
+    @Indexed(unique = true)                 // Ensures that a username is always unique, to prevent logging in to wrong user. Could be a good thing to implement, i thought.
     private String username;
     private String password;
+
     private Set<Role> authorities = new HashSet<>();
 
     public User() {
