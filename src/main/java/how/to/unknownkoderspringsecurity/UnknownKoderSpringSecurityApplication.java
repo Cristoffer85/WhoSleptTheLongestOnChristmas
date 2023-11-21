@@ -19,8 +19,7 @@ public class UnknownKoderSpringSecurityApplication {
     public static void main(String[] args) {
         SpringApplication.run(UnknownKoderSpringSecurityApplication.class, args);
 
-        UI terminalUI = new UI();
-        terminalUI.displayLoginMenu();
+
     }
 
     @Bean

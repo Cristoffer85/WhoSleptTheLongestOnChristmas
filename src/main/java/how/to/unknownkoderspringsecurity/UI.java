@@ -1,70 +1,83 @@
 package how.to.unknownkoderspringsecurity;
 
+import how.to.unknownkoderspringsecurity.model.LoginResponseDTO;
+import how.to.unknownkoderspringsecurity.model.User;
+import how.to.unknownkoderspringsecurity.service.AuthenticationService;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
 import java.util.Scanner;
 
-public class UI {
+@Component
+public class UI implements CommandLineRunner {
 
-    private Scanner scanner;
+    private final AuthenticationService authenticationService;
 
-    public UI() {
-        this.scanner = new Scanner(System.in);
+    public UI(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
-    public void displayLoginMenu() {
-        while (true) {
-            System.out.println("Welcome to the Application!");
-            System.out.println("1. Login");
-            System.out.println("2. Create new user");
-            System.out.println("3. Exit");
+    @Override
+    public void run(String... args) {
+        Scanner scanner = new Scanner(System.in);
 
-            int choice = getUserChoice();
+        while (true) {
+            System.out.println("1. Login");
+            System.out.println("2. Create User");
+            System.out.println("0. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
 
             switch (choice) {
                 case 1:
-                    handleLogin();
+                    login(scanner);
                     break;
                 case 2:
-                    handleCreateUser();
+                    createUser(scanner);
                     break;
-                case 3:
-                    System.out.println("Exiting the application. Goodbye!");
+                case 0:
+                    System.out.println("Exiting...");
                     System.exit(0);
                 default:
-                    System.out.println("Invalid choice. Please enter a valid option.");
+                    System.out.println("Invalid choice. Please try again.");
             }
         }
     }
 
-    private int getUserChoice() {
-        System.out.print("Enter your choice: ");
-        while (!scanner.hasNextInt()) {
-            System.out.println("Invalid input. Please enter a number.");
-            scanner.next(); // consume the invalid input
+    private void login(Scanner scanner) {
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        LoginResponseDTO loginResponse = authenticationService.loginUser(username, password);
+
+        if (loginResponse.getUser() != null) {
+            System.out.println("Login successful");
+            System.out.println("User: " + loginResponse.getUser().getUsername());
+            System.out.println("JWT: " + loginResponse.getJwt());
+        } else {
+            System.out.println("Login failed");
         }
-        return scanner.nextInt();
     }
 
-    private void handleLogin() {
-        System.out.print("Enter your username: ");
-        String username = scanner.next();
+    private void createUser(Scanner scanner) {
+        System.out.print("Enter new username: ");
+        String username = scanner.nextLine();
 
-        System.out.print("Enter your password: ");
-        String password = scanner.next();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
 
-        // TODO: Call your authentication service and perform login logic here
-        // For simplicity, let's assume a successful login for any input
-        System.out.println("Login successful! Welcome, " + username + ".");
-    }
+        User newUser = authenticationService.registerUser(username, password);
 
-    private void handleCreateUser() {
-        System.out.print("Enter a new username: ");
-        String username = scanner.next();
-
-        System.out.print("Enter a password for the new user: ");
-        String password = scanner.next();
-
-        // TODO: Call your user creation service and perform user creation logic here
-        // For simplicity, let's assume a successful user creation for any input
-        System.out.println("User created successfully! Welcome, " + username + ".");
+        if (newUser != null) {
+            System.out.println("User created successfully");
+            System.out.println("User: " + newUser.getUsername());
+        } else {
+            System.out.println("Failed to create user");
+        }
     }
 }

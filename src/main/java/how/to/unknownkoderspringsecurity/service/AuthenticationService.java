@@ -59,16 +59,19 @@ public class AuthenticationService {
 
     public LoginResponseDTO loginUser(String username, String password){
 
-        try{
-            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password)
-            );
+        try {
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+
+            // Print or log the authentication result
+            System.out.println("Authentication Result: " + auth.isAuthenticated());
 
             String token = tokenService.generateJwt(auth);
 
             return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
-
-        }catch(AuthenticationException e){
-            return new LoginResponseDTO(null,"");
+        } catch (AuthenticationException e) {
+            // Print or log the exception
+            e.printStackTrace();
+            return new LoginResponseDTO(null, "");
         }
     }
 }
