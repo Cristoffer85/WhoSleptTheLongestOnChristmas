@@ -30,7 +30,7 @@ public class UI implements CommandLineRunner {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Welcome to the How long did you sleep last christmas application!\n");
+            System.out.println("\nWelcome to the How long did you sleep last christmas application!\n");
 
             System.out.println("1. Login");
             System.out.println("2. Create User");
@@ -49,7 +49,7 @@ public class UI implements CommandLineRunner {
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("\nInvalid choice. Please try again.");
             }
         }
     }
@@ -79,66 +79,56 @@ public class UI implements CommandLineRunner {
 
     private void handleAdminMenu(Scanner scanner) {
         while (true) {
-            System.out.println("Admin Menu:");
-            System.out.println("1. View All Users");
-            System.out.println("2. View One User");
-            System.out.println("3. Create User");
-            System.out.println("4. Update User");
-            System.out.println("5. Delete User");
-            System.out.println("0. Logout");
-            System.out.print("Enter your choice: ");
+            System.out.println("""
+            Admin Menu:
+            1. View All Users
+            2. View One User
+            3. Create User
+            4. Update User
+            5. Delete User
+            0. Exit""");
+
+            System.out.print("\nEnter your choice: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
-                case 1:
-                    viewAllUsers();
-                    break;
-                case 2:
-                    viewOneUser(scanner);
-                    break;
-                case 3:
-                    createUser(scanner);
-                    break;
-                case 4:
-                    updateUser(scanner);
-                    break;
-                case 5:
-                    deleteUser(scanner);
-                    break;
-                case 0:
-                    System.out.println("Logging out...");
+                case 1 -> viewAllUsers();
+                case 2 -> viewOneUser(scanner);
+                case 3 -> createUser(scanner);
+                case 4 -> updateUser(scanner);
+                case 5 -> deleteUser(scanner);
+                case 0 -> {
+                    System.out.println("Exiting...");
                     return;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+                }
+                default -> System.out.println("Invalid choice. Please try again.");
             }
         }
     }
 
     private void handleUserMenu(Scanner scanner) {
         while (true) {
-            System.out.println("User Menu:");
-            System.out.println("1. View All Users");
-            System.out.println("2. View One User");
-            System.out.println("0. Logout");
-            System.out.print("Enter your choice: ");
+            System.out.println("""
+            User Menu:
+            1. View All Users
+            2. View One User
+            0. Exit""");
+
+            System.out.print("\nEnter your choice: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
-                case 1:
-                    viewAllUsers();
-                    break;
-                case 2:
-                    viewOneUser(scanner);
-                    break;
-                case 0:
-                    System.out.println("Logging out...");
+                case 1 -> viewAllUsers();
+                case 2 -> viewOneUser(scanner);
+                case 0 -> {
+                    System.out.println("Exiting...");
                     return;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+                }
+                default -> System.out.println("Invalid choice. Please try again.");
             }
         }
     }
@@ -180,16 +170,14 @@ public class UI implements CommandLineRunner {
         newUser.setUsername(username);
         newUser.setPassword(password);
 
-        // Assuming that you need to set authorities for the new user
-        // You can customize this part based on your requirements
         Role userRole = new Role("USER");
         newUser.setAuthorities(Set.of(userRole));
 
         User createdUser = adminController.createUser(newUser);
         if (createdUser != null) {
-            System.out.println("User created successfully");
+            System.out.println("\nUser created successfully");
         } else {
-            System.out.println("Failed to create user");
+            System.out.println("\nFailed to create user");
         }
     }
 
