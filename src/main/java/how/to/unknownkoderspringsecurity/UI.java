@@ -38,7 +38,7 @@ public class UI implements CommandLineRunner {
                     createUser(scanner);
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("\nInvalid choice. Please try again.");
             }
         }
     }
@@ -50,18 +50,14 @@ public class UI implements CommandLineRunner {
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
-        try {
-            LoginResponseDTO loginResponse = authenticationService.loginUser(username, password);
+        LoginResponseDTO loginResponse = authenticationService.loginUser(username, password);
 
-            if (loginResponse.getUser() != null) {
-                System.out.println("Login successful");
-                System.out.println("User: " + loginResponse.getUser().getUsername());
-                System.out.println("JWT: " + loginResponse.getJwt());
-            } else {
-                System.out.println("Login failed");
-            }
-        } catch (BadCredentialsException e) {
-            System.out.println("Incorrect Credentials. Try again.");
+        if (loginResponse.getUser() != null) {
+            System.out.println("\nUser found. Login successful.\n");
+            System.out.println("User: " + loginResponse.getUser().getUsername());
+            System.out.println("JWT: " + loginResponse.getJwt());
+        } else {
+            System.out.println("\nBad credentials. Login failed. Try again.\n");
         }
     }
 
