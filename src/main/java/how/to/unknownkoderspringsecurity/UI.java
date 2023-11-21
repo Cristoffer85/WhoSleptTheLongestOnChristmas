@@ -4,6 +4,7 @@ import how.to.unknownkoderspringsecurity.model.LoginResponseDTO;
 import how.to.unknownkoderspringsecurity.model.User;
 import how.to.unknownkoderspringsecurity.service.AuthenticationService;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -24,11 +25,10 @@ public class UI implements CommandLineRunner {
         while (true) {
             System.out.println("1. Login");
             System.out.println("2. Create User");
-            System.out.println("0. Exit");
-            System.out.print("Enter your choice: ");
+            System.out.print("\nEnter your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -37,9 +37,6 @@ public class UI implements CommandLineRunner {
                 case 2:
                     createUser(scanner);
                     break;
-                case 0:
-                    System.out.println("Exiting...");
-                    System.exit(0);
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
@@ -53,14 +50,18 @@ public class UI implements CommandLineRunner {
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
-        LoginResponseDTO loginResponse = authenticationService.loginUser(username, password);
+        try {
+            LoginResponseDTO loginResponse = authenticationService.loginUser(username, password);
 
-        if (loginResponse.getUser() != null) {
-            System.out.println("Login successful");
-            System.out.println("User: " + loginResponse.getUser().getUsername());
-            System.out.println("JWT: " + loginResponse.getJwt());
-        } else {
-            System.out.println("Login failed");
+            if (loginResponse.getUser() != null) {
+                System.out.println("Login successful");
+                System.out.println("User: " + loginResponse.getUser().getUsername());
+                System.out.println("JWT: " + loginResponse.getJwt());
+            } else {
+                System.out.println("Login failed");
+            }
+        } catch (BadCredentialsException e) {
+            System.out.println("Incorrect Credentials. Try again.");
         }
     }
 

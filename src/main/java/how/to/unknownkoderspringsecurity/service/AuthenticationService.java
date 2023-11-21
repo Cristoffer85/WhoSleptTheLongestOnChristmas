@@ -7,6 +7,7 @@ import how.to.unknownkoderspringsecurity.repository.RoleRepository;
 import how.to.unknownkoderspringsecurity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -57,21 +58,19 @@ public class AuthenticationService {
     }
 
 
-    public LoginResponseDTO loginUser(String username, String password){
-
+    public LoginResponseDTO loginUser(String username, String password) {
         try {
             Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-
-            // Print or log the authentication result
-            System.out.println("Authentication Result: " + auth.isAuthenticated());
 
             String token = tokenService.generateJwt(auth);
 
             return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
+        } catch (BadCredentialsException e) {
+            // Handle bad credentials exception
+            return new LoginResponseDTO(null, "Incorrect Credentials");
         } catch (AuthenticationException e) {
-            // Print or log the exception
-            e.printStackTrace();
-            return new LoginResponseDTO(null, "");
+            // Handle other authentication exceptions
+            return new LoginResponseDTO(null, "Authentication failed");
         }
     }
 }
