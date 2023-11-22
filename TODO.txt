@@ -5,13 +5,12 @@ Prio
 - Make correct values that want to be passed in to the program be passed from user. To make it be correct as of a How long did you sleep last christmas application.
 ---------------------
 
-- Finish small touch in UI to make it more U good X
+- Finish small touch in UI to make it more U good X. Make the app+ program more beautiful (Color/Font input or maybe evenJavaFX? Dont know.)?
 
-- Check over
+- Check:
         - imports,
         - comments in classes,
         - needed/not needed code,
-        - make the app+ program more beautiful (Color/Font input or maybe evenJavaFX? Dont know.)
 
 - Simple .txt-Instructions in main() how to utilize the API commands through POSTMAN, to check its verification/functions there
 
