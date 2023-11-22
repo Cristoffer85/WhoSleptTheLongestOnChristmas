@@ -16,6 +16,8 @@ Prio
 
 
 TODO-DONE
+- User can finally login again, used the RegisterDTO from the RegisterDTO-class in UI-createUser to solve it.
+
 - Change names of packages, etc, make them be correct.
 
 - Handle fault-intyping various in the UI class, so the game doesnt crash when wrong type.

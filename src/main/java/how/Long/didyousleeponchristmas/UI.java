@@ -1,5 +1,7 @@
 package how.Long.didyousleeponchristmas;
 
+import how.Long.didyousleeponchristmas.controller.AuthenticationController;
+import how.Long.didyousleeponchristmas.model.RegistrationDTO;
 import how.Long.didyousleeponchristmas.model.User;
 import how.Long.didyousleeponchristmas.service.AuthenticationService;
 import how.Long.didyousleeponchristmas.controller.AdminController;
@@ -18,6 +20,9 @@ public class UI implements CommandLineRunner {
 
     @Autowired
     private AdminController adminController;
+
+    @Autowired
+    private AuthenticationController authenticationController;
 
     private final AuthenticationService authenticationService;
 
@@ -213,14 +218,12 @@ public class UI implements CommandLineRunner {
             }
         }
 
-        User newUser = new User();
-        newUser.setUsername(username);
-        newUser.setPassword(password);
+        // Create RegistrationDTO
+        RegistrationDTO registrationDTO = new RegistrationDTO(username, password);
 
-        Role userRole = new Role("USER");
-        newUser.setAuthorities(Set.of(userRole));
+        // Call the registerUser method in AuthenticationController
+        User createdUser = authenticationController.registerUser(registrationDTO);
 
-        User createdUser = adminController.createUser(newUser);
         if (createdUser != null) {
             System.out.println("\nUser created successfully");
         } else {

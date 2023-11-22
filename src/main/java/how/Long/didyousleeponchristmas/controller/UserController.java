@@ -13,8 +13,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;  // Assuming you have a UserRepository interface
-
+    private UserRepository userRepository;
     @GetMapping("/")
     public String helloUserController() {
         return "User access level";

@@ -13,7 +13,7 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    private UserRepository userRepository;  // Assuming you have a UserRepository interface
+    private UserRepository userRepository;
 
     @GetMapping("/")
     public String helloAdminController() {
