@@ -14,6 +14,8 @@ Prio
 
 - Simple .txt-Instructions in main() how to utilize the API commands through POSTMAN, to check its verification/functions there
 
+- Connect to remote MongoDB as well? Handle fault-handling if cannot connect to it there?
+
 - Flowchart?
 
 
