@@ -7,15 +7,15 @@ Prio
 
 - Finish small touch in UI to make it more U good X
 
-- Handle fault-intyping various in the UI class, so the game doesnt crash when wrong type.
-
 - Check over
         - imports,
         - comments in classes,
         - needed/not needed code,
-        - make the app+ program more beautiful
+        - make the app+ program more beautiful (Color/Font input or maybe evenJavaFX? Dont know.)
 
 
 
 TODO-DONE
 - Change names of packages, etc, make them be correct.
+
+- Handle fault-intyping various in the UI class, so the game doesnt crash when wrong type.

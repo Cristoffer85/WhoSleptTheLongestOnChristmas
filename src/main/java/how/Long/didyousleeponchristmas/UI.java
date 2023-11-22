@@ -30,26 +30,43 @@ public class UI implements CommandLineRunner {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("\nWelcome to the How long did you sleep last christmas application!\n");
+            System.out.println("\nWelcome to the How long did you sleep last Christmas? application!\n");
 
             System.out.println("1. Login");
             System.out.println("2. Create User");
 
             System.out.print("\nEnter your choice: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            // Read the choice as a trimmed string
+            String choiceInput = scanner.nextLine().trim();
 
-            switch (choice) {
-                case 1:
-                    handleLogin(scanner);
-                    break;
-                case 2:
-                    createUser(scanner);
-                    break;
+            // Check if the choice is blank or empty
+            if (choiceInput.isEmpty()) {
+                System.out.println("\nInvalid choice. Please enter a valid number.");
+                continue;
+            }
 
-                default:
-                    System.out.println("\nInvalid choice. Please try again.");
+            // Validate the choice to ensure it's an integer
+            try {
+                int choice = Integer.parseInt(choiceInput);
+
+                if (choice == 0 || choice > 2) {
+                    System.out.println("\nInvalid choice. Please enter a valid number.");
+                    continue;
+                }
+
+                switch (choice) {
+                    case 1:
+                        handleLogin(scanner);
+                        break;
+                    case 2:
+                        createUser(scanner);
+                        break;
+                    default:
+                        System.out.println("\nInvalid choice. Please enter a valid number.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\nInvalid choice. Please enter a valid number.");
             }
         }
     }
@@ -89,6 +106,12 @@ public class UI implements CommandLineRunner {
             0. Exit""");
 
             System.out.print("\nEnter your choice: ");
+
+            if (!scanner.hasNextInt()) {
+                System.out.println("Invalid choice. Please enter a valid integer.");
+                scanner.next();
+                continue;
+            }
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -161,10 +184,34 @@ public class UI implements CommandLineRunner {
     }
 
     private void createUser(Scanner scanner) {
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
+        String username;
+        String password;
+
+        // Loop for username validation
+        while (true) {
+            System.out.print("Enter username: ");
+            username = scanner.nextLine();
+
+            // Validate username
+            if (isValidString(username)) {
+                break; // Exit the loop if the username is valid
+            } else {
+                System.out.println("\nInvalid username. Please enter a non-empty string.");
+            }
+        }
+
+        // Loop for password validation
+        while (true) {
+            System.out.print("Enter password: ");
+            password = scanner.nextLine();
+
+            // Validate password
+            if (isValidString(password)) {
+                break; // Exit the loop if the password is valid
+            } else {
+                System.out.println("\nInvalid password. Please enter a non-empty string.");
+            }
+        }
 
         User newUser = new User();
         newUser.setUsername(username);
@@ -181,29 +228,63 @@ public class UI implements CommandLineRunner {
         }
     }
 
+
     private void updateUser(Scanner scanner) {
-        System.out.print("Enter user ID to update: ");
-        String userId = scanner.nextLine();
-        User existingUser = adminController.getOneUser(userId);
+        String userId;
+        User existingUser;
 
-        if (existingUser != null) {
-            System.out.print("Enter new username: ");
-            String newUsername = scanner.nextLine();
-            System.out.print("Enter new password: ");
-            String newPassword = scanner.nextLine();
+        // Loop for user ID validation
+        while (true) {
+            System.out.print("Enter user ID to update: ");
+            userId = scanner.nextLine();
+            existingUser = adminController.getOneUser(userId);
 
-            existingUser.setUsername(newUsername);
-            existingUser.setPassword(newPassword);
-
-            User updatedUser = adminController.updateUser(userId, existingUser);
-
-            if (updatedUser != null) {
-                System.out.println("User updated successfully");
+            // Validate user ID
+            if (existingUser != null) {
+                break; // Exit the loop if the user ID is valid
             } else {
-                System.out.println("Failed to update user");
+                System.out.println("User not found. Please enter a valid user ID.");
             }
+        }
+
+        String newUsername;
+        String newPassword;
+
+        // Loop for new username validation
+        while (true) {
+            System.out.print("Enter new username: ");
+            newUsername = scanner.nextLine();
+
+            // Validate new username
+            if (isValidString(newUsername)) {
+                break; // Exit the loop if the new username is valid
+            } else {
+                System.out.println("Invalid username. Please enter a non-empty string.");
+            }
+        }
+
+        // Loop for new password validation
+        while (true) {
+            System.out.print("Enter new password: ");
+            newPassword = scanner.nextLine();
+
+            // Validate new password
+            if (isValidString(newPassword)) {
+                break; // Exit the loop if the new password is valid
+            } else {
+                System.out.println("Invalid password. Please enter a non-empty string.");
+            }
+        }
+
+        existingUser.setUsername(newUsername);
+        existingUser.setPassword(newPassword);
+
+        User updatedUser = adminController.updateUser(userId, existingUser);
+
+        if (updatedUser != null) {
+            System.out.println("User updated successfully");
         } else {
-            System.out.println("User not found.");
+            System.out.println("Failed to update user");
         }
     }
 
@@ -212,5 +293,18 @@ public class UI implements CommandLineRunner {
         String userId = scanner.nextLine();
         adminController.deleteOneUser(userId);
         System.out.println("User deleted successfully");
+    }
+
+    private boolean isValidInteger(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isValidString(String input) {
+        return !input.isEmpty();
     }
 }
