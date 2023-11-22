@@ -1,9 +1,9 @@
-package how.to.unknownkoderspringsecurity.controller;
+package how.Long.didyousleeponchristmas.controller;
 
-import how.to.unknownkoderspringsecurity.model.LoginResponseDTO;
-import how.to.unknownkoderspringsecurity.model.RegistrationDTO;
-import how.to.unknownkoderspringsecurity.model.User;
-import how.to.unknownkoderspringsecurity.service.AuthenticationService;
+import how.Long.didyousleeponchristmas.model.LoginResponseDTO;
+import how.Long.didyousleeponchristmas.model.RegistrationDTO;
+import how.Long.didyousleeponchristmas.model.User;
+import how.Long.didyousleeponchristmas.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

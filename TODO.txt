@@ -1,9 +1,21 @@
 
 TODO:
+---------------------
+Prio
 - Make correct values that want to be passed in to the program be passed from user. To make it be correct as of a How long did you sleep last christmas application.
+---------------------
 
-- Just small finish touches in the UI to make it display more pretty
+- Finish small touch in UI to make it more U good X
 
-- Change names of packages, etc, make them be correct. Check over imports, comments in classes, needed/not needed code, make the app+ program more beautiful
+- Handle fault-intyping various in the UI class, so the game doesnt crash when wrong type.
 
-- Handle fault-intyping various in the UI class, so the game doesnt crash when do so.
+- Check over
+        - imports,
+        - comments in classes,
+        - needed/not needed code,
+        - make the app+ program more beautiful
+
+
+
+TODO-DONE
+- Change names of packages, etc, make them be correct.

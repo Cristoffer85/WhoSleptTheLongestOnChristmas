@@ -1,10 +1,10 @@
-package how.to.unknownkoderspringsecurity.service;
+package how.Long.didyousleeponchristmas.service;
 
-import how.to.unknownkoderspringsecurity.model.LoginResponseDTO;
-import how.to.unknownkoderspringsecurity.model.Role;
-import how.to.unknownkoderspringsecurity.model.User;
-import how.to.unknownkoderspringsecurity.repository.RoleRepository;
-import how.to.unknownkoderspringsecurity.repository.UserRepository;
+import how.Long.didyousleeponchristmas.model.User;
+import how.Long.didyousleeponchristmas.model.LoginResponseDTO;
+import how.Long.didyousleeponchristmas.model.Role;
+import how.Long.didyousleeponchristmas.repository.RoleRepository;
+import how.Long.didyousleeponchristmas.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

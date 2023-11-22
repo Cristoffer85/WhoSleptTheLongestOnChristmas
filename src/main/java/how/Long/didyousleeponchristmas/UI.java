@@ -1,10 +1,10 @@
-package how.to.unknownkoderspringsecurity;
+package how.Long.didyousleeponchristmas;
 
-import how.to.unknownkoderspringsecurity.controller.AdminController;
-import how.to.unknownkoderspringsecurity.model.LoginResponseDTO;
-import how.to.unknownkoderspringsecurity.model.Role;
-import how.to.unknownkoderspringsecurity.model.User;
-import how.to.unknownkoderspringsecurity.service.AuthenticationService;
+import how.Long.didyousleeponchristmas.model.User;
+import how.Long.didyousleeponchristmas.service.AuthenticationService;
+import how.Long.didyousleeponchristmas.controller.AdminController;
+import how.Long.didyousleeponchristmas.model.LoginResponseDTO;
+import how.Long.didyousleeponchristmas.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

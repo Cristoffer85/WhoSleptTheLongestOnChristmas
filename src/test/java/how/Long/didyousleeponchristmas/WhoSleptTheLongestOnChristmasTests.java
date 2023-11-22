@@ -1,10 +1,10 @@
-package how.to.unknownkoderspringsecurity;
+package how.Long.didyousleeponchristmas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UnknownKoderSpringSecurityApplicationTests {
+class WhoSleptTheLongestOnChristmasTests {
 
     @Test
     void contextLoads() {

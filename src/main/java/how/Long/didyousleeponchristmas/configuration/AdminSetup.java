@@ -1,9 +1,9 @@
-package how.to.unknownkoderspringsecurity.configuration;
+package how.Long.didyousleeponchristmas.configuration;
 
-import how.to.unknownkoderspringsecurity.model.Role;
-import how.to.unknownkoderspringsecurity.model.User;
-import how.to.unknownkoderspringsecurity.repository.RoleRepository;
-import how.to.unknownkoderspringsecurity.repository.UserRepository;
+import how.Long.didyousleeponchristmas.model.Role;
+import how.Long.didyousleeponchristmas.model.User;
+import how.Long.didyousleeponchristmas.repository.RoleRepository;
+import how.Long.didyousleeponchristmas.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

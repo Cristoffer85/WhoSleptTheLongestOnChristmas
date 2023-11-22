@@ -1,6 +1,6 @@
-package how.to.unknownkoderspringsecurity.repository;
+package how.Long.didyousleeponchristmas.repository;
 
-import how.to.unknownkoderspringsecurity.model.Role;
+import how.Long.didyousleeponchristmas.model.Role;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

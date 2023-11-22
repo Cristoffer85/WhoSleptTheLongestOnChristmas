@@ -1,4 +1,4 @@
-package how.to.unknownkoderspringsecurity.model;
+package how.Long.didyousleeponchristmas.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

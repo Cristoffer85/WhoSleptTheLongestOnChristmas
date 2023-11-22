@@ -1,7 +1,7 @@
-package how.to.unknownkoderspringsecurity.controller;
+package how.Long.didyousleeponchristmas.controller;
 
-import how.to.unknownkoderspringsecurity.model.User;
-import how.to.unknownkoderspringsecurity.repository.UserRepository;
+import how.Long.didyousleeponchristmas.model.User;
+import how.Long.didyousleeponchristmas.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

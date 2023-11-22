@@ -1,7 +1,6 @@
-package how.to.unknownkoderspringsecurity.service;
+package how.Long.didyousleeponchristmas.service;
 
-import how.to.unknownkoderspringsecurity.model.User;
-import how.to.unknownkoderspringsecurity.repository.UserRepository;
+import how.Long.didyousleeponchristmas.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
