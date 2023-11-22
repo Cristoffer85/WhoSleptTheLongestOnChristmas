@@ -146,7 +146,7 @@ public class UI implements CommandLineRunner {
             System.out.println("All Users:");
             for (User user : users) {
                 System.out.println("Username: " + user.getUsername());
-                System.out.println("Authorities: " + user.getAuthorities());
+                System.out.println("Authorities: " + user.getAuthorityStrings());
                 System.out.println("-------------------------");
             }
         } else {
@@ -161,7 +161,7 @@ public class UI implements CommandLineRunner {
         if (user != null) {
             System.out.println("User Details:");
             System.out.println("Username: " + user.getUsername());
-            System.out.println("Authorities: " + user.getAuthorities());
+            System.out.println("Authorities: " + user.getAuthorityStrings());
         } else {
             System.out.println("User not found.");
         }
@@ -308,7 +308,7 @@ public class UI implements CommandLineRunner {
             System.out.println("All Users:");
             for (User user : users) {
                 System.out.println("Username: " + user.getUsername());
-                System.out.println("Authorities: " + user.getAuthorities());
+                System.out.println("Authorities: " + user.getAuthorityStrings());
                 System.out.println("-------------------------");
             }
         } else {
@@ -323,7 +323,7 @@ public class UI implements CommandLineRunner {
         if (user != null) {
             System.out.println("User Details:");
             System.out.println("Username: " + user.getUsername());
-            System.out.println("Authorities: " + user.getAuthorities());
+            System.out.println("Authorities: " + user.getAuthorityStrings());
         } else {
             System.out.println("User not found.");
         }

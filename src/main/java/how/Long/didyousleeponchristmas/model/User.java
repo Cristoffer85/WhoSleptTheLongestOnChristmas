@@ -1,5 +1,6 @@
 package how.Long.didyousleeponchristmas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -16,7 +17,7 @@ public class User implements UserDetails {
     @Id
     private String userId;
 
-    @Indexed(unique = true)                 // Ensures that a username is always unique, to prevent logging in to wrong user. Could be a good thing to implement, i thought.
+    @Indexed(unique = true)
     private String username;
     private String password;
 
@@ -35,6 +36,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Set<Role> getAuthorities() {
         return this.authorities;
     }
@@ -43,16 +45,42 @@ public class User implements UserDetails {
     public boolean isAccountNonExpired() {
         return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    // 2 extra methods, to view only (in the UI) the authority of the user. Not the whole hashset with the customgenerated Mongo-Db value. Thought that was unnecessary.
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", username='" + username + '\'' +
+                ", authorities=" + getAuthorityStrings() +
+                '}';
+    }
+
+    public String getAuthorityStrings() {
+        StringBuilder result = new StringBuilder("[");
+        for (Role role : authorities) {
+            result.append(role.getAuthority()).append(", ");
+        }
+        if (!authorities.isEmpty()) {
+            result.delete(result.length() - 2, result.length());
+        }
+        result.append("]");
+        return result.toString();
     }
 }
