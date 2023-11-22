@@ -25,9 +25,9 @@ public class AdminController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/getOneUser/{userId}")
-    public User getOneUser(@PathVariable String userId) {
-        return userRepository.findById(userId).orElse(null);
+    @GetMapping("/getOneUser/{username}")
+    public User getOneUser(@PathVariable String username) {
+        return userRepository.findByUsername(username).orElse(null);
     }
 
     @PostMapping("/createUser")
@@ -35,9 +35,9 @@ public class AdminController {
         return userRepository.save(user);
     }
 
-    @PutMapping("/updateUser/{userId}")
-    public User updateUser(@PathVariable String userId, @RequestBody User user) {
-        User existingUser = userRepository.findById(userId).orElse(null);
+    @PutMapping("/updateUser/{username}")
+    public User updateUser(@PathVariable String username, @RequestBody User user) {
+        User existingUser = userRepository.findByUsername(username).orElse(null);
         if (existingUser != null) {
             // Update user fields as needed
             existingUser.setUsername(user.getUsername());
@@ -48,8 +48,8 @@ public class AdminController {
         return null; // User not found
     }
 
-    @DeleteMapping("/deleteOneUser/{userId}")
-    public void deleteOneUser(@PathVariable String userId) {
-        userRepository.deleteById(userId);
+    @DeleteMapping("/deleteOneUser/{username}")
+    public void deleteOneUser(@PathVariable String username) {
+        userRepository.deleteByUsername(username);
     }
 }

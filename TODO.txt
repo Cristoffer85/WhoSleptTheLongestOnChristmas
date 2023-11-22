@@ -15,6 +15,9 @@ Prio
         - needed/not needed code,
         - make the app+ program more beautiful (Color/Font input or maybe evenJavaFX? Dont know.)
 
+- Simple .txt-Instructions in main() how to utilize the API commands through POSTMAN, to check its verification/functions there
+
+- Flowchart?
 
 
 TODO-DONE

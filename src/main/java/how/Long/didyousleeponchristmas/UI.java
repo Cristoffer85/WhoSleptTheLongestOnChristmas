@@ -1,6 +1,7 @@
 package how.Long.didyousleeponchristmas;
 
 import how.Long.didyousleeponchristmas.controller.AuthenticationController;
+import how.Long.didyousleeponchristmas.controller.UserController;
 import how.Long.didyousleeponchristmas.model.RegistrationDTO;
 import how.Long.didyousleeponchristmas.model.User;
 import how.Long.didyousleeponchristmas.service.AuthenticationService;
@@ -20,6 +21,9 @@ public class UI implements CommandLineRunner {
 
     @Autowired
     private AdminController adminController;
+
+    @Autowired
+    private UserController userController;
 
     @Autowired
     private AuthenticationController authenticationController;
@@ -65,7 +69,7 @@ public class UI implements CommandLineRunner {
                         handleLogin(scanner);
                         break;
                     case 2:
-                        createUser(scanner);
+                        AdminCreateUser(scanner);
                         break;
                     default:
                         System.out.println("\nInvalid choice. Please enter a valid number.");
@@ -122,11 +126,11 @@ public class UI implements CommandLineRunner {
             scanner.nextLine();
 
             switch (choice) {
-                case 1 -> viewAllUsers();
-                case 2 -> viewOneUser(scanner);
-                case 3 -> createUser(scanner);
-                case 4 -> updateUser(scanner);
-                case 5 -> deleteUser(scanner);
+                case 1 -> AdminViewAllUsers();
+                case 2 -> AdminViewOneUser(scanner);
+                case 3 -> AdminCreateUser(scanner);
+                case 4 -> AdminUpdateUser(scanner);
+                case 5 -> AdminDeleteUser(scanner);
                 case 0 -> {
                     System.out.println("Exiting...");
                     return;
@@ -136,32 +140,7 @@ public class UI implements CommandLineRunner {
         }
     }
 
-    private void handleUserMenu(Scanner scanner) {
-        while (true) {
-            System.out.println("""
-            User Menu:
-            1. View All Users
-            2. View One User
-            0. Exit""");
-
-            System.out.print("\nEnter your choice: ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (choice) {
-                case 1 -> viewAllUsers();
-                case 2 -> viewOneUser(scanner);
-                case 0 -> {
-                    System.out.println("Exiting...");
-                    return;
-                }
-                default -> System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
-
-    private void viewAllUsers() {
+    private void AdminViewAllUsers() {
         List<User> users = adminController.getAllUsers();
         if (!users.isEmpty()) {
             System.out.println("All Users:");
@@ -175,8 +154,8 @@ public class UI implements CommandLineRunner {
         }
     }
 
-    private void viewOneUser(Scanner scanner) {
-        System.out.print("Enter user ID: ");
+    private void AdminViewOneUser(Scanner scanner) {
+        System.out.print("Enter username: ");
         String userId = scanner.nextLine();
         User user = adminController.getOneUser(userId);
         if (user != null) {
@@ -188,7 +167,7 @@ public class UI implements CommandLineRunner {
         }
     }
 
-    private void createUser(Scanner scanner) {
+    private void AdminCreateUser(Scanner scanner) {
         String username;
         String password;
 
@@ -232,13 +211,13 @@ public class UI implements CommandLineRunner {
     }
 
 
-    private void updateUser(Scanner scanner) {
+    private void AdminUpdateUser(Scanner scanner) {
         String userId;
         User existingUser;
 
         // Loop for user ID validation
         while (true) {
-            System.out.print("Enter user ID to update: ");
+            System.out.print("Enter username to update: ");
             userId = scanner.nextLine();
             existingUser = adminController.getOneUser(userId);
 
@@ -291,19 +270,62 @@ public class UI implements CommandLineRunner {
         }
     }
 
-    private void deleteUser(Scanner scanner) {
-        System.out.print("Enter user ID to delete: ");
+    private void AdminDeleteUser(Scanner scanner) {
+        System.out.print("Enter username to delete: ");
         String userId = scanner.nextLine();
         adminController.deleteOneUser(userId);
         System.out.println("User deleted successfully");
     }
 
-    private boolean isValidInteger(String input) {
-        try {
-            Integer.parseInt(input);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
+    private void handleUserMenu(Scanner scanner) {
+        while (true) {
+            System.out.println("""
+            User Menu:
+            1. View All Users
+            2. View One User
+            0. Exit""");
+
+            System.out.print("\nEnter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1 -> UserViewAllUsers();
+                case 2 -> UserViewOneUser(scanner);
+                case 0 -> {
+                    System.out.println("Exiting...");
+                    return;
+                }
+                default -> System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private void UserViewAllUsers() {
+        List<User> users = userController.getAllUsers();
+        if (!users.isEmpty()) {
+            System.out.println("All Users:");
+            for (User user : users) {
+                System.out.println("Username: " + user.getUsername());
+                System.out.println("Authorities: " + user.getAuthorities());
+                System.out.println("-------------------------");
+            }
+        } else {
+            System.out.println("No users found.");
+        }
+    }
+
+    private void UserViewOneUser(Scanner scanner) {
+        System.out.print("Enter username: ");
+        String userId = scanner.nextLine();
+        User user = userController.getOneUser(userId);
+        if (user != null) {
+            System.out.println("User Details:");
+            System.out.println("Username: " + user.getUsername());
+            System.out.println("Authorities: " + user.getAuthorities());
+        } else {
+            System.out.println("User not found.");
         }
     }
 
