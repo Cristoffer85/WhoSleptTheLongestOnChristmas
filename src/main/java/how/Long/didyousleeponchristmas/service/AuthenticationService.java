@@ -6,6 +6,7 @@ import how.Long.didyousleeponchristmas.model.Role;
 import how.Long.didyousleeponchristmas.repository.RoleRepository;
 import how.Long.didyousleeponchristmas.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,24 +40,30 @@ public class AuthenticationService {
     private TokenService tokenService;
 
     public User registerUser(String username, String password) {
-        String encodedPassword = passwordEncoder.encode(password);
-        Role userRole = roleRepository.findByAuthority("USER").orElseThrow(() -> new RuntimeException("USER role not found"));
+        try {
+            String encodedPassword = passwordEncoder.encode(password);
+            Role userRole = roleRepository.findByAuthority("USER")
+                    .orElseThrow(() -> new RuntimeException("USER role not found"));
 
-        Set<Role> authorities = new HashSet<>();
-        authorities.add(userRole);
+            Set<Role> authorities = new HashSet<>();
+            authorities.add(userRole);
 
-        User newUser = new User();
-        newUser.setUsername(username);
-        newUser.setPassword(encodedPassword);
-        newUser.setAuthorities(authorities);
+            User newUser = new User();
+            newUser.setUsername(username);
+            newUser.setPassword(encodedPassword);
+            newUser.setAuthorities(authorities);
 
-        // Generate a unique userId (you can use UUID for this)
-        String userId = UUID.randomUUID().toString();
-        newUser.setUserId(userId);
+            // Generate a unique userId (you can use UUID for this)
+            String userId = UUID.randomUUID().toString();
+            newUser.setUserId(userId);
 
-        return userRepository.save(newUser);
+            return userRepository.save(newUser);
+
+        } catch (DataIntegrityViolationException e) {
+            // Catch the exception thrown when there's a unique constraint violation
+            throw new RuntimeException("Username '" + username + "' already exists. Please choose a different username.");
+        }
     }
-
 
     public LoginResponseDTO loginUser(String username, String password) {
         try {

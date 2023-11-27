@@ -1,20 +1,18 @@
 package how.Long.didyousleeponchristmas;
 
+import how.Long.didyousleeponchristmas.controller.AdminController;
 import how.Long.didyousleeponchristmas.controller.AuthenticationController;
 import how.Long.didyousleeponchristmas.controller.UserController;
+import how.Long.didyousleeponchristmas.model.LoginResponseDTO;
 import how.Long.didyousleeponchristmas.model.RegistrationDTO;
 import how.Long.didyousleeponchristmas.model.User;
 import how.Long.didyousleeponchristmas.service.AuthenticationService;
-import how.Long.didyousleeponchristmas.controller.AdminController;
-import how.Long.didyousleeponchristmas.model.LoginResponseDTO;
-import how.Long.didyousleeponchristmas.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 @Component
 public class UI implements CommandLineRunner {
@@ -200,16 +198,20 @@ public class UI implements CommandLineRunner {
         // Create RegistrationDTO
         RegistrationDTO registrationDTO = new RegistrationDTO(username, password);
 
-        // Call the registerUser method in AuthenticationController
-        User createdUser = authenticationController.registerUser(registrationDTO);
+        try {
+            // Call the registerUser method in AuthenticationController
+            User createdUser = authenticationController.registerUser(registrationDTO);
 
-        if (createdUser != null) {
-            System.out.println("\nUser created successfully");
-        } else {
-            System.out.println("\nFailed to create user");
+            if (createdUser != null) {
+                System.out.println("\nUser created successfully");
+            } else {
+                System.out.println("\nFailed to create user");
+            }
+        } catch (RuntimeException e) {
+            // Catch the exception thrown when there's a failure to create a user
+            System.out.println("\nFailed to create user: " + e.getMessage());
         }
     }
-
 
     private void AdminUpdateUser(Scanner scanner) {
         String userId;
