@@ -3,6 +3,7 @@ package how.Long.didyousleeponchristmas.service;
 import how.Long.didyousleeponchristmas.model.User;
 import how.Long.didyousleeponchristmas.model.LoginResponseDTO;
 import how.Long.didyousleeponchristmas.model.Role;
+import how.Long.didyousleeponchristmas.model.WeekDay;
 import how.Long.didyousleeponchristmas.repository.RoleRepository;
 import how.Long.didyousleeponchristmas.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class AuthenticationService {
+public class AuthenticationService {                // Class that handles Registration of new user, and login of a user (Authenticates that they are valid) Uses LoginResponseDTO among others
 
     @Autowired
     private UserRepository userRepository;
@@ -39,7 +40,7 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public User registerUser(String username, String password) {
+    public User registerUser(String username, String password, int maxHoursSlept, WeekDay weekDay) {
         try {
             String encodedPassword = passwordEncoder.encode(password);
             Role userRole = roleRepository.findByAuthority("USER")
@@ -52,6 +53,8 @@ public class AuthenticationService {
             newUser.setUsername(username);
             newUser.setPassword(encodedPassword);
             newUser.setAuthorities(authorities);
+            newUser.setMaxHoursSlept(maxHoursSlept);
+            newUser.setWeekDay(weekDay);
 
             // Generate a unique userId (you can use UUID for this)
             String userId = UUID.randomUUID().toString();

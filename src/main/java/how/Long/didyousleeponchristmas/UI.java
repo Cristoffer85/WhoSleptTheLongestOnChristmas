@@ -6,9 +6,11 @@ import how.Long.didyousleeponchristmas.controller.UserController;
 import how.Long.didyousleeponchristmas.model.LoginResponseDTO;
 import how.Long.didyousleeponchristmas.model.RegistrationDTO;
 import how.Long.didyousleeponchristmas.model.User;
+import how.Long.didyousleeponchristmas.model.WeekDay;
 import how.Long.didyousleeponchristmas.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,6 +28,9 @@ public class UI implements CommandLineRunner {
     @Autowired
     private AuthenticationController authenticationController;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private final AuthenticationService authenticationService;
 
     public UI(AuthenticationService authenticationService) {
@@ -38,6 +43,17 @@ public class UI implements CommandLineRunner {
 
         while (true) {
             System.out.println("\nWelcome to the How long did you sleep last Christmas? application!\n");
+
+            System.out.println("""
+                                .-""-.
+                               /,..___\\
+                              () {_____}
+                                (/-@-@-\\)
+                                {`-=^=-'}
+                                {  `-'  }
+                                 {     }
+                                  `---'
+                    """);
 
             System.out.println("1. Login");
             System.out.println("2. Create User");
@@ -104,13 +120,13 @@ public class UI implements CommandLineRunner {
     private void handleAdminMenu(Scanner scanner) {
         while (true) {
             System.out.println("""
-            Admin Menu:
+            \nAdmin Menu:
             1. View All Users
             2. View One User
             3. Create User
             4. Update User
             5. Delete User
-            0. Exit""");
+            0. <--- Back to Main Menu""");
 
             System.out.print("\nEnter your choice: ");
 
@@ -145,6 +161,8 @@ public class UI implements CommandLineRunner {
             for (User user : users) {
                 System.out.println("Username: " + user.getUsername());
                 System.out.println("Authorities: " + user.getAuthorityStrings());
+                System.out.println("Max Hours slept in one day: " + user.getMaxHoursSlept());
+                System.out.println("Weekday: " + user.getWeekDay());
                 System.out.println("-------------------------");
             }
         } else {
@@ -160,6 +178,8 @@ public class UI implements CommandLineRunner {
             System.out.println("User Details:");
             System.out.println("Username: " + user.getUsername());
             System.out.println("Authorities: " + user.getAuthorityStrings());
+            System.out.println("Max Hours slept in one day: " + user.getMaxHoursSlept());
+            System.out.println("Weekday: " + user.getWeekDay());
         } else {
             System.out.println("User not found.");
         }
@@ -168,6 +188,8 @@ public class UI implements CommandLineRunner {
     private void AdminCreateUser(Scanner scanner) {
         String username;
         String password;
+        int maxHoursSlept;
+        WeekDay weekDay;
 
         // Loop for username validation
         while (true) {
@@ -195,8 +217,38 @@ public class UI implements CommandLineRunner {
             }
         }
 
-        // Create RegistrationDTO
-        RegistrationDTO registrationDTO = new RegistrationDTO(username, password);
+        // Loop for maxHoursSlept validation
+        while (true) {
+            System.out.print("Enter max hours slept (1-24): ");
+            try {
+                maxHoursSlept = Integer.parseInt(scanner.nextLine());
+
+                // Validate maxHoursSlept
+                if (maxHoursSlept >= 1 && maxHoursSlept <= 24) {
+                    break; // Exit the loop if maxHoursSlept is valid
+                } else {
+                    System.out.println("\nInvalid max hours slept. Please enter a value between 1 and 24.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\nInvalid input. Please enter a valid integer.");
+            }
+        }
+
+            // Loop for weekDay validation
+        while (true) {
+            System.out.print("Enter week day (MONDAY, TUESDAY, ..., SUNDAY): ");
+            try {
+                weekDay = WeekDay.valueOf(scanner.nextLine().toUpperCase());
+
+                // Validate weekDay
+                break; // Exit the loop if weekDay is valid
+            } catch (IllegalArgumentException e) {
+                System.out.println("\nInvalid week day. Please enter a valid day of the week.");
+            }
+        }
+
+            // Create RegistrationDTO
+        RegistrationDTO registrationDTO = new RegistrationDTO(username, password, maxHoursSlept, weekDay);
 
         try {
             // Call the registerUser method in AuthenticationController
@@ -212,6 +264,7 @@ public class UI implements CommandLineRunner {
             System.out.println("\nFailed to create user: " + e.getMessage());
         }
     }
+
 
     private void AdminUpdateUser(Scanner scanner) {
         String userId;
@@ -233,6 +286,8 @@ public class UI implements CommandLineRunner {
 
         String newUsername;
         String newPassword;
+        int newMaxHoursSlept;
+        WeekDay newWeekDay;
 
         // Loop for new username validation
         while (true) {
@@ -260,8 +315,40 @@ public class UI implements CommandLineRunner {
             }
         }
 
+        // Loop for new maxHoursSlept validation
+        while (true) {
+            System.out.print("Enter new max hours slept (1-24): ");
+            try {
+                newMaxHoursSlept = Integer.parseInt(scanner.nextLine());
+
+                // Validate newMaxHoursSlept
+                if (newMaxHoursSlept >= 1 && newMaxHoursSlept <= 24) {
+                    break; // Exit the loop if newMaxHoursSlept is valid
+                } else {
+                    System.out.println("Invalid max hours slept. Please enter a value between 1 and 24.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid integer.");
+            }
+        }
+
+        // Loop for new weekDay validation
+        while (true) {
+            System.out.print("Enter new week day (MONDAY, TUESDAY, ..., SUNDAY): ");
+            try {
+                newWeekDay = WeekDay.valueOf(scanner.nextLine().toUpperCase());
+
+                // Validate newWeekDay
+                break; // Exit the loop if newWeekDay is valid
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid week day. Please enter a valid day of the week.");
+            }
+        }
+
         existingUser.setUsername(newUsername);
-        existingUser.setPassword(newPassword);
+        existingUser.setPassword(passwordEncoder.encode(newPassword));
+        existingUser.setMaxHoursSlept(newMaxHoursSlept);
+        existingUser.setWeekDay(newWeekDay);
 
         User updatedUser = adminController.updateUser(userId, existingUser);
 
@@ -282,10 +369,10 @@ public class UI implements CommandLineRunner {
     private void handleUserMenu(Scanner scanner) {
         while (true) {
             System.out.println("""
-            User Menu:
+            \nUser Menu:
             1. View All Users
             2. View One User
-            0. Exit""");
+            0. <--- Back to Main Menu""");
 
             System.out.print("\nEnter your choice: ");
 
@@ -311,6 +398,8 @@ public class UI implements CommandLineRunner {
             for (User user : users) {
                 System.out.println("Username: " + user.getUsername());
                 System.out.println("Authorities: " + user.getAuthorityStrings());
+                System.out.println("Max Hours slept in one day: " + user.getMaxHoursSlept());
+                System.out.println("Weekday: " + user.getWeekDay());
                 System.out.println("-------------------------");
             }
         } else {
@@ -326,6 +415,8 @@ public class UI implements CommandLineRunner {
             System.out.println("User Details:");
             System.out.println("Username: " + user.getUsername());
             System.out.println("Authorities: " + user.getAuthorityStrings());
+            System.out.println("Max Hours slept in one day: " + user.getMaxHoursSlept());
+            System.out.println("Weekday: " + user.getWeekDay());
         } else {
             System.out.println("User not found.");
         }

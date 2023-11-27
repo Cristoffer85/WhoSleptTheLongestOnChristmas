@@ -26,7 +26,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SecurityConfiguration {
+public class SecurityConfiguration {                    // Sec. config with and through http:// etc.
 
     private final RSAKeyProperties keys;
 

@@ -3,7 +3,7 @@ package how.Long.didyousleeponchristmas.utils;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 
-public class KeyGeneratorUtility {
+public class KeyGeneratorUtility {                  // Class that encrypts the password
 
     public static KeyPair generateRsaKey(){
 

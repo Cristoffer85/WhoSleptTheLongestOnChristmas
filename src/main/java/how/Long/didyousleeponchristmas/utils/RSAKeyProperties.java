@@ -1,14 +1,6 @@
 package how.Long.didyousleeponchristmas.utils;
 
-import org.springframework.stereotype.Component;
-
-import java.security.KeyPair;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.security.KeyPair;
@@ -17,7 +9,7 @@ import java.security.interfaces.RSAPublicKey;
 
 @Component
 @Data
-public class RSAKeyProperties {
+public class RSAKeyProperties {                 // Helper class to KeyGeneratorUtility class, constructs RSA-keys
 
     private RSAPublicKey publicKey;
     private RSAPrivateKey privateKey;

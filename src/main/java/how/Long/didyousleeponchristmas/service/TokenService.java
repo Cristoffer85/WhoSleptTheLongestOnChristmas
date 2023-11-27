@@ -13,7 +13,7 @@ import java.time.Instant;
 import java.util.stream.Collectors;
 
 @Service
-public class TokenService {
+public class TokenService {             // Class that encodes to JWT (JSON Web Token)
 
     @Autowired
     private JwtEncoder jwtEncoder;

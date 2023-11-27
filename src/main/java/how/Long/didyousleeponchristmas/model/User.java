@@ -20,6 +20,8 @@ public class User implements UserDetails {
     @Indexed(unique = true)
     private String username;
     private String password;
+    private int maxHoursSlept = 0;
+    private WeekDay weekDay;
 
     private Set<Role> authorities = new HashSet<>();
 
@@ -27,12 +29,14 @@ public class User implements UserDetails {
         super();
     }
 
-    public User(String userId, String username, String password, Set<Role> authorities) {
+    public User(String userId, String username, String password, Set<Role> authorities, int maxHoursSlept, WeekDay weekDay) {
         super();
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
+        this.maxHoursSlept = maxHoursSlept;
+        this.weekDay = weekDay;
     }
 
     @Override
@@ -69,6 +73,8 @@ public class User implements UserDetails {
                 "userId='" + userId + '\'' +
                 ", username='" + username + '\'' +
                 ", authorities=" + getAuthorityStrings() +
+                ", maxHoursSlept=" + maxHoursSlept +
+                ", weekDay=" + weekDay +
                 '}';
     }
 

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponseDTO {
+public class LoginResponseDTO {     // Class that uses the
     private User user;
     private String jwt;
 }

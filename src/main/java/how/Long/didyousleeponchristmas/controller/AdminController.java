@@ -32,6 +32,8 @@ public class AdminController {
 
     @PostMapping("/createUser")
     public User createUser(@RequestBody User user) {
+        user.setMaxHoursSlept(user.getMaxHoursSlept());
+        user.setWeekDay(user.getWeekDay());
         return userRepository.save(user);
     }
 
@@ -43,6 +45,8 @@ public class AdminController {
             existingUser.setUsername(user.getUsername());
             existingUser.setPassword(user.getPassword());
             existingUser.setAuthorities(user.getAuthorities());
+            existingUser.setMaxHoursSlept(user.getMaxHoursSlept());
+            existingUser.setWeekDay(user.getWeekDay());
             return userRepository.save(existingUser);
         }
         return null; // User not found
