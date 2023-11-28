@@ -3,9 +3,6 @@ TODO:
 ---------------------
 - Flowchart?
 
-- Simple .txt-Instructions in main() how to utilize the API commands through POSTMAN, to check its verification/functions there
-    - Started
-
 - Connect to remote MongoDB as well? Handle fault-handling if cannot connect to it there?
     - Tried, no ork to complete it right now.
 
@@ -32,3 +29,8 @@ TODO-DONE
 
 - Finish small touch in UI to make it more U good X. Make the app+ program more beautiful (Color/Font input or maybe evenJavaFX? Dont know.)?
 
+- Simple .txt-Instructions in main() how to utilize the API commands through POSTMAN, to check its verification/functions there
+    - Started
+
+- Full README.MD complete
+    + Documentation part up top in same document
