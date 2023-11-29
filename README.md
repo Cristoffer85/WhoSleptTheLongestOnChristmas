@@ -44,7 +44,7 @@ Go further down to #Usage to learn how to use the application through the API an
 
 ## Usage
 
-####EITHER - Start the application directly in your IDE and choose options from the local UI, or follow below to test the API-functions specifically:
+#### EITHER - Start the application directly in your IDE and choose options from the local UI, or follow below to test the API-functions specifically:
 
 TEST instructions for API through through POSTMAN
         
