@@ -1,0 +1,44 @@
+name: Super-Linter
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  super-lint:
+    name: Lint Code Base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v4.0.0
+        with:
+          path: |
+            ~/.npm
+            ~/.cache
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/*.lock', '**/package.json') }}
+
+      - name: Set up JDK 19
+        uses: actions/setup-java@v2
+        with:
+          java-version: '19'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Install Super-Linter
+        run: |
+          git clone origin	https://github.com/Cristoffer85/WhoSleptTheLongestOnChristmas-VG.git
+          cd super-linter
+          ./install.sh
+        env:
+          RUN_LOCAL: true
+
+      - name: Run Super-Linter
+        run: |
+          ./super-linter.sh
+        env:
+          RUN_LOCAL: true
+
