@@ -44,7 +44,9 @@ Go further down to #Usage to learn how to use the application through the API an
 
 ## Usage
 
-#### Who slept the longest on Christmas - TEST instructions through POSTMAN, API http-requests
+#### EITHER - Start the application directly in your IDE and choose options from the local UI, or follow below to test the API-functions specifically:
+
+TEST instructions for API through through POSTMAN
         
 * For Pre-CLARIFICATION - An ADMIN has all the Authoritites that a USER has -> That means, and ADMINs JW-Token is valid for USER Authorities as well.
 
