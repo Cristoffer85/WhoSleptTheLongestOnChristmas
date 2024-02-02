@@ -31,7 +31,7 @@ jobs:
       - name: Install Super-Linter
         run: |
           git clone https://github.com/Cristoffer85/WhoSleptTheLongestOnChristmas-VG.git
-          cd super-linter
+          cd WhoSleptTheLongestOnChristmas-VG
           ./install.sh
         env:
           RUN_LOCAL: true
