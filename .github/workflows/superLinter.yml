@@ -30,7 +30,7 @@ jobs:
 
       - name: Install Super-Linter
         run: |
-          git clone origin	https://github.com/Cristoffer85/WhoSleptTheLongestOnChristmas-VG.git
+          git clone https://github.com/Cristoffer85/WhoSleptTheLongestOnChristmas-VG.git
           cd super-linter
           ./install.sh
         env:
